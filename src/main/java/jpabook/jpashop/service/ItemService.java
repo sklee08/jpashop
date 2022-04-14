@@ -1,5 +1,6 @@
 package jpabook.jpashop.service;
 
+import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +17,29 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional
-    public void save(Item item){
+    public void save(Item item) {
         itemRepository.save(item);
     }
 
-    public List<Item> findItems(){
+    @Transactional
+    public Item updateItem(Long itemId, Book param) {
+
+        // transactional 로 된상태이기에
+        // 영속상태의 엔티티라서 자동으로 flush 될 때 DB에 업데이트 쿼리를 날림.
+        // 내부적으로 em.merge와 완적히 코드 동작방식이 동일함
+        Item findItem = itemRepository.findOne(itemId);
+        findItem.setPrice(param.getPrice());
+        findItem.setName(param.getName());
+        findItem.setStockQuantity(param.getStockQuantity());
+
+        return findItem;
+    }
+
+    public List<Item> findItems() {
         return itemRepository.findAll();
     }
 
-    public Item findOne(Long itemId){
+    public Item findOne(Long itemId) {
         return itemRepository.findOne(itemId);
     }
 }
