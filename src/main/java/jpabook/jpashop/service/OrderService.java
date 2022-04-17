@@ -1,9 +1,6 @@
 package jpabook.jpashop.service;
 
-import jpabook.jpashop.domain.Delivery;
-import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderItem;
+import jpabook.jpashop.domain.*;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
 import jpabook.jpashop.repository.MemberRepository;
@@ -33,6 +30,7 @@ public class OrderService {
 
         // 배송정보
         Delivery delivery = new Delivery();
+        delivery.setStatus(DeliveryStatus.READY);
         delivery.setAddress(member.getAddress());
 
         // 주문상품 생성
@@ -62,7 +60,7 @@ public class OrderService {
     
     // 검색
 
-    /*public List<Order> findOrders(OrderSearch orderSearch){
-        return orderRepository.findAll(orderSearch);
-    }*/
+    public List<Order> findOrders(OrderSearch orderSearch){
+        return orderRepository.findAllByString(orderSearch);
+    }
 }

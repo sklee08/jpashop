@@ -40,7 +40,7 @@ public class OrderRepository {
 
         // 직접 조건마다 jpql 을 직접 작성하는 예
 
-        String jpql = "select 0 from order join o.member m";
+        String jpql = "select o from Order o join o.member m";
         boolean isFirstCondition = true;
 
         if(orderSearch.getOrderStatus() != null){

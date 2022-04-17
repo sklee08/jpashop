@@ -22,17 +22,15 @@ public class ItemService {
     }
 
     @Transactional
-    public Item updateItem(Long itemId, Book param) {
+    public void updateItem(Long itemId, String name , int price, int stockQuantity) {
 
         // transactional 로 된상태이기에
         // 영속상태의 엔티티라서 자동으로 flush 될 때 DB에 업데이트 쿼리를 날림.
         // 내부적으로 em.merge와 완적히 코드 동작방식이 동일함
         Item findItem = itemRepository.findOne(itemId);
-        findItem.setPrice(param.getPrice());
-        findItem.setName(param.getName());
-        findItem.setStockQuantity(param.getStockQuantity());
-
-        return findItem;
+        findItem.setPrice(price);
+        findItem.setName(name);
+        findItem.setStockQuantity(stockQuantity);
     }
 
     public List<Item> findItems() {
